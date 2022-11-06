@@ -1,25 +1,33 @@
 import logo from './logo.svg';
 import './App.css';
+import Repolist from './component/Repolist';
+import Error from './component/Error'
+import { useEffect, useState } from 'react';
+import axios from 'axios';
+import { Routes, Route } from 'react-router-dom';
+
+ 
 
 function App() {
-  return (
+  const [repolist, setrepolist] = useState([])
+  useEffect(()=>{
+    axios.get("https://api.github.com/users/abdullahi31/repos").then((res)=>{
+        console.log(res.data)
+        setrepolist(res.data)
+    })
+  }, [])
+  return(
+
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <Routes>
+      <Route path="/"  element={<Repolist  repolist={repolist}/>} />
+      <Route path="/repo/:name"  element={<Repolist  repolist={repolist}/>} />
+      <Route path="*"  element={<Error/>} />
+    </Routes>
+      
     </div>
-  );
+  )
+  
 }
 
 export default App;
