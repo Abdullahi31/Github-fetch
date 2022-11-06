@@ -7,7 +7,7 @@ const Repolist = ({repolist})=>{
           {repolist.map((data, i) => {
             return(
 
-              <li>
+              <li key={i}>
                  {data.name}
               </li>
             )
